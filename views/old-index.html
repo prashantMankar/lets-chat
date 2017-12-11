@@ -1,0 +1,49 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/jquery.3.1.1.min.js"></script>
+<script src="js/main.js"></sript>
+<script src="/webrtc.io.js"></script>
+<link href="css/main.css" />
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+<script>
+var socket = io();
+</script>
+<style>
+.user {
+	float: left;
+	width: 500px;
+	min-height: 200px;
+}
+#messageArea {
+	height: 200px;
+}
+</style>
+<div style="float:right;"><button onclick="TogetherJS(this); return false;" type="button">Collaborate</button></div>
+<div>
+	<div id="error" style="color:red"></div>
+	<input type="text" name="username" id="username">
+	<button id="submit" >Submit</button>
+</div>
+<div style="min-height:300px;">
+	<div class="user">
+		
+		<div id="customer"></div>
+	</div>
+	<div class="user">
+		
+		<div id="agents"></div>
+	</div>
+	<div class="user" style="float:right !important;">
+		
+		<div id="alluser"></div>
+		<div id="supervisor"></div>
+	</div>
+</div>
+
+<div style="min-height:200px;overflow:auto; width:500px;">
+	<div id="messageArea"></div>
+</div>
+
+<div style="height:50px; padding-top:15px;">	
+	<input type="text" id="message" name="message" style="width: 500px;height: 50px;">
+	<button id="sendMessage">Send Message</button>
+</div>

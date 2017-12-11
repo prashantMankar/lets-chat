@@ -1,0 +1,544 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatApp</title>
+<!-- ALL CSS STYLES HERE -->
+<link href="/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+
+<!-- HTML5 shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.js"></script>
+<![endif]-->
+
+<style type="text/css">
+*{
+	margin: 0px;
+	padding: 0px;
+	transition: 120ms all ease-in-out;
+	outline: none !important;
+}
+body{
+	overflow: hidden !important;
+	font-family: Helvetica, Arial, Sans-Serif !important;
+}
+input.loginField{
+	border: none !important;
+	background-color: #fff !important;
+	border-radius: 0px !important;
+	border-bottom: 1px solid #ddd !important;
+	outline: none !important;
+	box-shadow: none !important;
+	margin-top: 80px;
+	padding: 5px;
+	color: #878787;
+}
+input.loginField:focus{
+    background-color: #fff !important;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.55) !important;
+	-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.55) !important;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.55) !important;
+}
+button.loginBtn{
+	padding: 7px 30px !important;
+	background-color: #383431 !important;
+	border: none !important;
+	color: rgba(255,255,255,0.4);
+	border-radius: 0px !important;
+	margin-top: 50px;
+	font-size: 14px;
+	width: 120px;
+	height: 45px !important;
+	cursor: pointer;
+}
+button.loginBtn:hover{
+	color: rgba(255,255,255,0.8);
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.55) !important;
+	-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.55) !important;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.55) !important;
+}
+button.loginBtn:active{
+	color: rgba(255,255,255,1);
+	/*inside shadow*/
+	-webkit-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.85) !important;
+	-moz-box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.85) !important;
+	box-shadow: inset 0px 0px 10px 0px rgba(0,0,0,0.85) !important;
+}
+.chatApp{
+	overflow: hidden !important;
+	min-width: 300px !important;
+	float: left;
+	width: 100%;
+}
+.appLogin{
+	text-align: center;
+}
+.appBanner{
+	width: 100%;
+	min-height: 320px;
+	text-align: center;
+
+	background: rgb(255,111,3);
+	background: -moz-linear-gradient(left, rgba(255,111,3,1) 0%, rgba(255,162,96,1) 77%, rgba(255,111,3,1) 100%);
+	background: -webkit-linear-gradient(left, rgba(255,111,3,1) 0%,rgba(255,162,96,1) 77%,rgba(255,111,3,1) 100%);
+	background: linear-gradient(to right, rgba(255,111,3,1) 0%,rgba(255,162,96,1) 77%,rgba(255,111,3,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff6f03', endColorstr='#ff6f03',GradientType=1 );
+}
+p.invalidEmailAlert{
+	margin: 7px 0px;
+	font-size: 12px;
+	color: #ae0404;
+	display: none;
+}
+.invalidEmailFocused{
+	border: 1px solid #f00 !important;
+}
+.appBanner h1{
+	font-weight: normal;
+	color: #fff;
+	padding-top: 100px;
+	font-size: 28px;
+}
+.poweredBy{
+	font-size: 11px;
+	color: rgba(255,255,255,0.3);
+	padding: 5px !important;
+}
+.poweredBy:hover{
+	color: rgba(255,255,255,0.7);
+}
+.chatPage,
+.agentSuperView{
+	display: none;
+}
+.chatHeader,
+.chatFooter,
+.agentTitle{
+	width: 100%;
+	height: 35px;
+	background-color: #383431;
+	line-height: 35px;
+	cursor: pointer;
+}
+.chatBody{
+	width: 100%;
+	background-color: #eee;
+}
+.chatNarrow{
+	width: calc(100% - 220px) !important;
+}
+.chatType {
+	width: 10px;
+	height: 10px;
+	border-radius: 20px;
+	float: left;
+	margin-left: 10px;
+	margin-top: 13px;
+}
+.regularChat{
+	background-color: #ff740c;
+}
+.conferenceChat{
+	background-color: #1fc555 ;
+}
+.privatChat{
+	background-color: #9e73ff !important;
+}
+.regularChatBtn{
+	background-color: #ff740c !important;
+	color: rgba(255,255,255,0.4);
+}
+.regularChatBtn:hover{
+	color: rgba(255,255,255,0.9);
+}
+
+.conferenceChatBtn{
+	background-color: #1fc555 !important;
+	color: rgba(255,255,255,0.4);
+}
+.conferenceChatBtn:hover{
+	color: rgba(255,255,255,0.9);
+}
+
+.privatChatBtn{
+	background-color: #9e73ff !important;
+	color: rgba(255,255,255,0.4);
+}
+.privatChatBtn:hover{
+	color: rgba(255,255,255,0.9);
+}
+
+.defaultSendBtn{
+	background-color: #17bc0d !important;
+	color: rgba(255,255,255,0.4);
+}
+.defaultSendBtn:hover{
+	color: rgba(255,255,255,0.9);
+}
+
+
+.chatTitle,
+.agentTitle{
+	float: left;
+	margin-left: 10px;
+	font-size: 12px;
+	color: #a3a2a1;
+}
+.chatTitle:hover,
+.chatAction i:hover,
+.userAvatar:hover,
+.agentTitle:hover
+{
+	color: #e0e0e0;
+}
+.chatAction{
+	float: right;
+	font-size: 10px;
+	color: #a3a2a1;
+}
+.chatAction i{
+	padding: 6px 8px;
+}
+.maxDiv{
+	transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+}
+.minimizedChat{
+	position: fixed;
+	bottom: 0;
+}
+.hideBlock{
+	display: none !important;
+}
+.msgDiv{
+	width: 80%;
+	float: left;
+	margin-left: 5px;
+}
+.sendMsg{
+	float: right;
+	margin-right: 5px;
+}
+div.chatBody{
+	min-height: 300px !important;
+	overflow-y: auto !important;
+	padding: 0px 10px;
+}
+input.msgField{
+	width: 100%;
+	border: none !important;
+	background-color: #fff !important;
+	border-radius: 0px !important;
+	border-bottom: 1px solid #ddd !important;
+	outline: none !important;
+	box-shadow: none !important;
+	padding: 5px;
+	color: #000;
+	-webkit-box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.15) !important;
+	-moz-box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.15) !important;
+	box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.15) !important;
+}
+input.msgField:focus{
+	-webkit-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.35) !important;
+	-moz-box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.35) !important;
+	box-shadow: inset 0px 0px 2px 1px rgba(0,0,0,0.35) !important;
+}
+button.SendMsgBtn{
+	padding: 5px !important;
+	border: none !important;
+	border-radius: 0px !important;
+	font-size: 14px;
+	cursor: pointer;
+	min-width: 30px;
+}
+button.SendMsgBtn:hover{
+	-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.55) !important;
+	-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.55) !important;
+	box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.55) !important;
+}
+button.SendMsgBtn:active{
+	color: rgba(255,255,255,1);
+	/*inside shadow*/
+	-webkit-box-shadow: inset 0px 0px 4px 0px rgba(0,0,0,0.85) !important;
+	-moz-box-shadow: inset 0px 0px 4px 0px rgba(0,0,0,0.85) !important;
+	box-shadow: inset 0px 0px 4px 0px rgba(0,0,0,0.85) !important;
+}
+.chatFooter{
+	-webkit-box-shadow: 0px -2px 2px 0px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px -2px 2px 0px rgba(0,0,0,0.25);
+	box-shadow: 0px -2px 2px 0px rgba(0,0,0,0.25);
+}
+.chatPage{
+	overflow: hidden !important;
+}
+.msgReceivedDiv,
+.msgSentDiv{
+    margin-top: 7px;
+	margin-bottom: 7px;
+	clear: both !important;
+	float: left;
+}
+.userAvatar{
+	width: 30px;
+	height: 30px;
+	background-color: #000;
+	border-radius: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: #a3a2a1;
+	font-size: 12px;
+	float: left;
+	cursor: pointer;
+}
+.msgInbox,
+.msgOutbox{
+	min-height: 20px;
+	width: 75%;
+	min-width: 150px;
+	background-color: #ddd;
+	float: left;
+	font-size: 13px;
+	padding: 5px;
+	margin-left: 7px;
+	border-radius: 5px;
+	-webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
+	-moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
+	box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
+}
+.msgInbox{
+	border-top-left-radius: 0px !important;
+}
+.msgOutbox{
+	border-top-right-radius: 0px !important;
+}
+.msgOutbox{
+	margin-right: 7px;
+}
+.msgInbox p,
+.msgOutbox p{
+	text-align: right;
+	color: #999;
+	font-size: 11px;
+	margin-top: 7px;
+}
+.agentSuperView{
+	max-width: 33.33%;
+	min-width: 150px;
+	float: left;
+	margin-left: -10px !important;
+}
+.agentTitle{
+	padding-left: 10px !important;
+}
+.slideLeft{
+	margin-left: 220px !important;
+}
+.onlineList {
+    float: left;
+    color: #999;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.onlineList:hover {
+    background-color: #111111;
+    color: #fff;
+}
+.onlineListDiv {
+    width: 220px;
+    min-height: 300px;
+    position: absolute !important;
+    background-color: #e6e6e6;
+    -webkit-box-shadow: 3px 0px 3px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 3px 0px 3px 0px rgba(0,0,0,0.15);
+    box-shadow: 3px 0px 3px 0px rgba(0,0,0,0.15);
+    z-index: -1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.sendFront{
+	z-index: 0 !important;
+}
+.listView{
+	font-size: 14px !important;
+	color: #7e7e7e;
+}
+.listView ul li{
+	padding: 7px !important;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.listView ul li:nth-of-type(2n+1) {
+    background-color: #ddd;
+}
+.listView ul li:hover{
+	border-right: 5px solid #4f81ab;
+}
+.activeUserChat{
+	border-right: 5px solid #ff8d39 !important;
+}
+.newMsgAlert{
+	animation:flashHead 1s infinite
+}
+@keyframes flashHead {
+	0% {
+		background-color:rgba(56,52,49, 1);
+	}
+	50% {
+		background-color:rgba(7,239,10,1.00);
+	}
+	100% {
+		background-color:rgba(56,52,49, 1);
+	}
+}
+.shareScreen{
+	font-size: 16px;
+	color: #0095dd;
+}
+</style>
+</head>
+<body>
+	<section class="chatApp">
+
+	<!-- login page starts here -->
+		<div class="loginPage">
+			<div class="appBanner">
+				<h1>ChatApp</h1>
+				<span class="poweredBy">Powered by: Enhancier Cx</span>
+				<p>
+					<input class="loginField" type="text" name="username" id="username" placeholder="Enter your email here" autofocus>
+				</p>
+				<p class="invalidEmailAlert">Invalid email id..!</p>
+			</div>
+			<div class="appLogin">
+				<button class="loginBtn" id="submit">Login</button>
+			</div>
+		</div>
+	<!-- login page ends here -->
+
+	<!-- chat window starts here -->
+		<div class="chatPage">
+			<div class="chatHeader">
+				<div class="onlineList">
+					<i class="fa fa-angle-left" aria-hidden="true"></i>
+				</div>
+				<div class="chatType regularChat">
+				</div>
+				<div class="chatTitle">
+					<span>Support</span>
+					<span>&nbsp;|&nbsp;</span>
+					<span class="onlineListHeading"></span>
+				</div>
+				<div class="chatAction">
+					<i onclick="TogetherJS(this); return false;" class="fa fa-share-alt-square shareScreen" aria-hidden="true"></i>
+					<i class="fa fa-window-minimize minMaxChat" aria-hidden="true"></i>
+					<i class="fa fa-times closeChat" aria-hidden="true"></i>
+				</div>
+			</div>
+
+<!-- online users lists div starts here -->
+			<div class="onlineListDiv">
+				<div>
+					<div class="listView" id="customer">
+						<ul>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+<!-- online users lists div ends here -->
+
+			<div class="chatBody"  id="messageArea">
+					
+<!-- 			<div class="msgReceivedDiv">
+				<div class="userAvatar">
+					<span>G</span>
+				</div>
+				<div class="msgInbox">
+					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+					<p>Nov 24, 04:23 PM</p>
+				</div>
+			</div>
+
+			<div class="msgSentDiv">
+				<div class="msgOutbox">
+					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</span>
+					<p>Nov 24, 04:53 PM</p>
+				</div>
+				<div class="userAvatar">
+					<span>A</span>
+				</div>
+			</div> -->
+
+			</div>
+			<div class="chatFooter">
+				<div class="msgDiv">
+					<input class="msgField" type="text" id="message" name="message" placeholder="Enter your email here" autofocus>
+				</div>
+				<div class="sendMsg">
+					<button class="SendMsgBtn regularChatBtn" id="sendMessage"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+				</div>
+			</div>
+		</div>
+	<!-- chat window ends here -->
+
+	</section>
+<!-- All scripts here -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/jquery.3.1.1.min.js"></script>
+<script src="js/main.js"></sript>
+<link href="css/main.css" />
+<script>
+var socket = io();
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		TogetherJSConfig_suppressInvite = true;
+
+		$('i.minMaxChat').click(function(){
+			$('i.minMaxChat').toggleClass('maxDiv');
+			$('div.chatBody').toggleClass('hideBlock');
+			$('div.chatFooter').toggleClass('hideBlock');
+			$('div.onlineListDiv').toggleClass('hideBlock');
+			$('#togetherjs-container').toggleClass('hideBlock');
+
+			$('div.chatHeader').toggleClass('minimizedChat');
+			$('div.chatFooter div.sendMsg msgField').focus();
+		});
+
+		$('div.listView ul li').mouseover(function(){
+			$(this).attr('title' , $(this).text());
+		});
+
+		
+		
+		$('div.listView ul li').click(function(){
+			$('div.listView ul li').removeClass('activeUserChat');
+			$(this).addClass('activeUserChat');
+		});
+
+		$('div.onlineList').click(function(){
+			$('div.onlineListDiv').toggleClass('sendFront');
+			$('div.chatBody').toggleClass('slideLeft');
+			$('div.chatBody').toggleClass('chatNarrow');
+			$('div.onlineList i').toggleClass('fa-angle-left');
+			$('div.onlineList i').toggleClass('fa-angle-right');
+		});
+
+		$(window).resize(function() {
+			$('div.chatBody').css('height', $(window).height() - 70+'px');
+			$('div.onlineListDiv').css('height', $(window).height() - 70+'px');
+		});
+			$(window).trigger('resize');
+			$("div.chatBody").trigger('resize');
+	});
+</script>
+</body>
+</html>
